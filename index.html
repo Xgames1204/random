@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Круг за кнопкой</title>
+    <style>
+        /* Центрирование всей страницы */
+        body {
+            display: flex;
+            flex-direction: column; /* Размещаем элементы вертикально */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            background-color: #0f5ab0;
+            overflow-x: hidden;
+            font-family: "Comic Sans MS", cursive; 
+        }
+
+        /* Контейнер */
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Круг */
+        .circle {
+            position: absolute;
+            width: 1400px;
+            height: 1000px;
+            background: linear-gradient(to top, #2779fe, #7395cd);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -80%);
+            z-index: -1;
+        }
+
+        /* Поля ввода */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .input-group input {
+            padding: 10px;
+            border: 2px solid #2779fe;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+            font-family: "Comic Sans MS", cursive; 
+            border: none;
+        }
+
+        /* Кнопка */
+        .btn {
+            background-color: bisque;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: "Comic Sans MS", cursive; 
+        }
+        .disabled {
+            background-color: rgb(146, 146, 146);
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: "Comic Sans MS", cursive; 
+        }
+
+        /* Контейнер для текста */
+        .continer {
+            position: relative;
+            margin-top: 20px;
+        }
+
+        /* Текст с рамкой */
+        .text {
+            color: darkorange;
+            font-size: 20px;
+            position: absolute;
+            top: 5.5%;
+            left: 50%;
+            transform: translate(-50%, -5%);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background-color: rgb(143, 237, 49);
+            text-align: center;
+            width: 50px;
+            height: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="circle"></div>
+
+        <!-- Поля ввода -->
+        <div class="input-group">
+            <input id="userInput1" type="number" placeholder="1 число" min="0">
+            <input id="userInput2" type="number" placeholder="2 число" min="0">
+        </div>
+
+        <button class="btn" onclick="generateRandom()" id="button">Рандомное число</button>
+    </div>
+
+    <div class="continer">
+        <p id="random" class="text">0</p>
+    </div>
+
+    <script>
+        
+    function checkInputs() {
+        let min = parseInt(document.getElementById("userInput1").value);
+        let max = parseInt(document.getElementById("userInput2").value);
+        let button = document.getElementById("button");
+
+        if (isNaN(min) || isNaN(max)) {
+            button.textContent = "Введите числа";
+            button.className = "disabled"; // Меняем стиль кнопки
+            button.disabled = true; // Отключаем кнопку
+        } else {
+            button.textContent = "Рандомное число";
+            button.className = "btn"; // Возвращаем стиль кнопки
+            button.disabled = false; // Включаем кнопку
+        }
+    }
+
+    function generateRandom() {
+        let min = parseInt(document.getElementById("userInput1").value);
+        let max = parseInt(document.getElementById("userInput2").value);
+
+        if (min > max) {
+            [min, max] = [max, min];
+        }
+
+        let n = Math.floor(Math.random() * (max - min + 1)) + min;
+        document.getElementById("random").textContent = n;
+    }
+
+    // Добавляем автоматическую проверку при вводе
+    document.getElementById("userInput1").addEventListener("input", checkInputs);
+    document.getElementById("userInput2").addEventListener("input", checkInputs);
+
+    // Проверяем состояние кнопки при загрузке страницы
+    checkInputs();
+
+
+        
+
+    </script>
+</body>
+</html>
